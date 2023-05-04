@@ -12,5 +12,21 @@ exports.homepage = async (req, res) => {
         res.render("index", {
             locals,
         });
-    } catch (error) {}
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+// Add User forms
+exports.addUser = async (req, res) => {
+    const locals = {
+        title: "Add User Forms",
+        description: "Users Data Management",
+    };
+
+    try {
+        res.render("user/add", { locals });
+    } catch (error) {
+        console.log(error);
+    }
 };
