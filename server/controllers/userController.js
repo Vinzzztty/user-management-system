@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 
 // Home Routes
 exports.homepage = async (req, res) => {
+    const messages = await req.flash("info");
+
     const locals = {
         title: "Users Data",
         description: "Users Data Management",
@@ -11,6 +13,7 @@ exports.homepage = async (req, res) => {
     try {
         res.render("index", {
             locals,
+            messages,
         });
     } catch (error) {
         console.log(error);
@@ -26,6 +29,33 @@ exports.addUser = async (req, res) => {
 
     try {
         res.render("user/add", { locals });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+// Post ADD User
+exports.postUser = async (req, res) => {
+    const locals = {
+        title: "Add User Forms",
+        description: "Users Data Management",
+    };
+
+    console.log(req.body);
+
+    const newUser = new User({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        tel: req.body.tel,
+        email: req.body.email,
+        details: req.body.details,
+    });
+
+    try {
+        await User.create(newUser);
+        await req.flash("info", "New User has been added");
+
+        res.redirect("/");
     } catch (error) {
         console.log(error);
     }
