@@ -11,9 +11,12 @@ exports.homepage = async (req, res) => {
     };
 
     try {
+        const users = await User.aggregate([{ $sort: { updatedAt: -1 } }]);
+
         res.render("index", {
             locals,
             messages,
+            users,
         });
     } catch (error) {
         console.log(error);
