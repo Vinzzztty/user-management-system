@@ -63,3 +63,22 @@ exports.postUser = async (req, res) => {
         console.log(error);
     }
 };
+
+// GET User by _id
+exports.userById = async (req, res) => {
+    const locals = {
+        title: "GET User data by ID",
+        description: "Users Data Management",
+    };
+
+    try {
+        const user = await User.findOne({ _id: req.params.id });
+
+        res.render("user/view", {
+            locals,
+            user,
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
